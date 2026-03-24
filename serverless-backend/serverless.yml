@@ -1,0 +1,69 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: julidanii
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: stock-movers
+service: stock-movers-pipeline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-2
+  stage: dev
+
+  environment:
+    TABLE_NAME: StockMoversTable
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:Scan
+            - dynamodb:Query
+          Resource:
+            - arn:aws:dynamodb:us-east-2:*:table/StockMoversTable
+
+functions:
+
+  getMovers:
+    handler: handler.getMovers
+
+    events:
+      - httpApi:
+          path: /movers
+          method: get
+
+  ingestMovers:
+    handler: handler.ingestMovers
+
+    events:
+      - schedule: rate(1 day)
+
+resources:
+  Resources:
+
+    StockMoversTable:
+      Type: AWS::DynamoDB::Table
+
+      Properties:
+        TableName: StockMoversTable
+
+        BillingMode: PAY_PER_REQUEST
+
+        AttributeDefinitions:
+
+          - AttributeName: ticker
+            AttributeType: S
+
+          - AttributeName: date
+            AttributeType: S
+
+        KeySchema:
+
+          - AttributeName: ticker
+            KeyType: HASH
+
+          - AttributeName: date
+            KeyType: RANGE

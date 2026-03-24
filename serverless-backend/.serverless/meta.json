@@ -1,0 +1,178 @@
+{
+  "C:\\Users\\Julia Gebretatiyos\\Downloads\\Stock-Movers\\Stock_Movers\\serverless-backend\\serverless.yml": {
+    "versionFramework": "4.33.0",
+    "servicePath": "C:\\Users\\Julia Gebretatiyos\\Downloads\\Stock-Movers\\Stock_Movers\\serverless-backend\\serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "org": "julidanii",
+      "app": "stock-movers",
+      "service": "stock-movers-pipeline",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs18.x",
+        "region": "us-east-2",
+        "stage": "dev",
+        "environment": {
+          "TABLE_NAME": "StockMoversTable"
+        },
+        "iam": {
+          "role": {
+            "statements": [
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "dynamodb:PutItem",
+                  "dynamodb:GetItem",
+                  "dynamodb:Scan",
+                  "dynamodb:Query"
+                ],
+                "Resource": "arn:aws:dynamodb:us-east-2:*:table/StockMoversTable"
+              }
+            ]
+          }
+        },
+        "versionFunctions": true
+      },
+      "functions": {
+        "getMovers": {
+          "handler": "handler.getMovers",
+          "events": [
+            {
+              "httpApi": {
+                "path": "/movers",
+                "method": "get"
+              }
+            }
+          ],
+          "name": "stock-movers-pipeline-dev-getMovers"
+        },
+        "ingestMovers": {
+          "handler": "handler.ingestMovers",
+          "events": [
+            {
+              "schedule": "rate(1 day)"
+            }
+          ],
+          "name": "stock-movers-pipeline-dev-ingestMovers"
+        }
+      },
+      "resources": {
+        "Resources": {
+          "StockMoversTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "StockMoversTable",
+              "BillingMode": "PAY_PER_REQUEST",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "ticker",
+                  "AttributeType": "S"
+                },
+                {
+                  "AttributeName": "date",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "ticker",
+                  "KeyType": "HASH"
+                },
+                {
+                  "AttributeName": "date",
+                  "KeyType": "RANGE"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs18.x",
+      "region": "us-east-2",
+      "stage": "dev",
+      "environment": {
+        "TABLE_NAME": "StockMoversTable"
+      },
+      "iam": {
+        "role": {
+          "statements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:Query"
+              ],
+              "Resource": "arn:aws:dynamodb:us-east-2:*:table/StockMoversTable"
+            }
+          ]
+        }
+      },
+      "versionFunctions": true
+    },
+    "dashboard": {
+      "isEnabledForService": true,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": {
+        "providers": false,
+        "monitoring": false
+      },
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": "4hSXBcbvQ4FHgLVgLJ",
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\norg: julidanii\n# \"app\" enables Serverless Framework Dashboard features and sharing them with other Services.\napp: stock-movers\nservice: stock-movers-pipeline\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x\r\n  region: us-east-2\r\n  stage: dev\r\n\r\n  environment:\r\n    TABLE_NAME: StockMoversTable\r\n\r\n  iam:\r\n    role:\r\n      statements:\r\n        - Effect: Allow\r\n          Action:\r\n            - dynamodb:PutItem\r\n            - dynamodb:GetItem\r\n            - dynamodb:Scan\r\n            - dynamodb:Query\r\n          Resource:\r\n            - arn:aws:dynamodb:us-east-2:*:table/StockMoversTable\r\n\r\nfunctions:\r\n\r\n  getMovers:\r\n    handler: handler.getMovers\r\n\r\n    events:\r\n      - httpApi:\r\n          path: /movers\r\n          method: get\r\n\r\n  ingestMovers:\r\n    handler: handler.ingestMovers\r\n\r\n    events:\r\n      - schedule: rate(1 day)\r\n\r\nresources:\r\n  Resources:\r\n\r\n    StockMoversTable:\r\n      Type: AWS::DynamoDB::Table\r\n\r\n      Properties:\r\n        TableName: StockMoversTable\r\n\r\n        BillingMode: PAY_PER_REQUEST\r\n\r\n        AttributeDefinitions:\r\n\r\n          - AttributeName: ticker\r\n            AttributeType: S\r\n\r\n          - AttributeName: date\r\n            AttributeType: S\r\n\r\n        KeySchema:\r\n\r\n          - AttributeName: ticker\r\n            KeyType: HASH\r\n\r\n          - AttributeName: date\r\n            KeyType: RANGE",
+    "command": [
+      "invoke"
+    ],
+    "options": {
+      "function": "ingestMovers"
+    },
+    "orgId": "91bf3888-d865-44a4-9566-246cfe186999",
+    "orgName": "julidanii",
+    "userId": "2clSD5t80KfdXWhMcx",
+    "userName": "julidanii",
+    "serviceProviderAwsAccountId": "357980556834",
+    "serviceProviderAwsCfStackName": "stock-movers-pipeline-dev",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-2:357980556834:stack/stock-movers-pipeline-dev/f39d83b0-27bb-11f1-a7b7-06fdb110795f",
+    "serviceProviderAwsCfStackCreated": "2026-03-24T19:59:22.621Z",
+    "serviceProviderAwsCfStackUpdated": "2026-03-24T20:11:37.126Z",
+    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "GetMoversLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-2:357980556834:function:stock-movers-pipeline-dev-getMovers:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-stock-movers-pipeline-dev-GetMoversLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "IngestMoversLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-2:357980556834:function:stock-movers-pipeline-dev-ingestMovers:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-stock-movers-pipeline-dev-IngestMoversLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "HttpApiId",
+        "OutputValue": "0o6g6j04p2",
+        "Description": "Id of the HTTP API",
+        "ExportName": "sls-stock-movers-pipeline-dev-HttpApiId"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "serverless-framework-deployments-us-east-2-3c3e432f-8d0b",
+        "ExportName": "sls-stock-movers-pipeline-dev-ServerlessDeploymentBucketName"
+      },
+      {
+        "OutputKey": "HttpApiUrl",
+        "OutputValue": "https://0o6g6j04p2.execute-api.us-east-2.amazonaws.com",
+        "Description": "URL of the HTTP API",
+        "ExportName": "sls-stock-movers-pipeline-dev-HttpApiUrl"
+      }
+    ]
+  }
+}
