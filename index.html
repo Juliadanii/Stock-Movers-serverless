@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Stock Movers Dashboard">
     <meta name="author" content="Julia">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     <title>Stock Movers Dashboard</title>
 
@@ -176,7 +178,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Best Performer
+                                                top Mover
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800" id="bestPerformer">--</div>
                                         </div>
@@ -216,6 +218,19 @@
                                     <div id="statusMessage" class="status-text text-muted">
                                         Ready to load stock mover data.
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Graph -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card shadow">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Percent Change Trend</h6>
+                                </div>
+                                <div class="card-body" style="height: 350px;">
+                                    <canvas id="moversChart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -283,8 +298,8 @@
 
     <script>
         // Replace this with your real API Gateway endpoint
-        const API_URL = "https://yx6tfjk7ki.execute-api.us-east-2.amazonaws.com/movers";
-
+        const API_URL = "https://0o6g6j04p2.execute-api.us-east-2.amazonaws.com/movers";
+        let moversChart = null;
         const tableBody = document.getElementById("moversTableBody");
         const statusMessage = document.getElementById("statusMessage");
         const recordCount = document.getElementById("recordCount");
@@ -362,6 +377,54 @@
             return [];
         }
 
+        function renderChart(rows) {
+            const canvas = document.getElementById("moversChart");
+            if (!canvas) return;
+
+            const ctx = canvas.getContext("2d");
+
+            const labels = rows.map(item => item.date || "N/A");
+            const values = rows.map(item =>
+                Number(
+                    item.percent_change ??
+                    item.percentChange ??
+                    item.change_percent ??
+                    item.changePercent ??
+                    item["Percent Change"] ??
+                    0
+                )
+            );
+
+            if (moversChart) {
+                moversChart.destroy();
+            }
+
+            moversChart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Percent Change (%)",
+                        data: values,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
         function renderTable(rows) {
             if (!rows.length) {
                 tableBody.innerHTML = `
@@ -454,6 +517,7 @@
 
                 renderTable(rows);
                 updateSummary(rows);
+                renderChart(rows);
                 setStatus("Stock mover data loaded successfully.", "success");
             } catch (error) {
                 console.error("Error fetching movers:", error);

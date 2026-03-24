@@ -107,7 +107,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-2-3c3e432f-8d0b",
-          "S3Key": "serverless/stock-movers-pipeline/dev/1774383093296-2026-03-24T20:11:33.296Z/stock-movers-pipeline.zip"
+          "S3Key": "serverless/stock-movers-pipeline/dev/1774390757230-2026-03-24T22:19:17.230Z/stock-movers-pipeline.zip"
         },
         "Handler": "handler.getMovers",
         "Runtime": "nodejs18.x",
@@ -116,7 +116,8 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "TABLE_NAME": "StockMoversTable"
+            "TABLE_NAME": "StockMoversTable",
+            "MASSIVE_API_KEY": "zg1FIXPZL89LZRQoyyeu5toRfBLnSm4x"
           }
         },
         "Role": {
@@ -135,7 +136,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-2-3c3e432f-8d0b",
-          "S3Key": "serverless/stock-movers-pipeline/dev/1774383093296-2026-03-24T20:11:33.296Z/stock-movers-pipeline.zip"
+          "S3Key": "serverless/stock-movers-pipeline/dev/1774390757230-2026-03-24T22:19:17.230Z/stock-movers-pipeline.zip"
         },
         "Handler": "handler.ingestMovers",
         "Runtime": "nodejs18.x",
@@ -144,7 +145,8 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "TABLE_NAME": "StockMoversTable"
+            "TABLE_NAME": "StockMoversTable",
+            "MASSIVE_API_KEY": "zg1FIXPZL89LZRQoyyeu5toRfBLnSm4x"
           }
         },
         "Role": {
@@ -158,24 +160,24 @@
         "IngestMoversLogGroup"
       ]
     },
-    "GetMoversLambdaVersionO9BL2CKu7IBT4dEOsfCDRez87PGCai4CGZx4aZ6oLq0": {
+    "GetMoversLambdaVersionG7PUgGHE6jubGyLcL5EOU72ZNvObVcn81i18gJYKo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetMoversLambdaFunction"
         },
-        "CodeSha256": "5X/7zgrg83OACxhajnBDmEEbqXsFklldPdY98ra0Lag="
+        "CodeSha256": "hoEt9lSAqIrZ6LD8xhAkQ9jTRr4OyzJa6Ui+C9cdvp0="
       }
     },
-    "IngestMoversLambdaVersionfxKXiGy74ftdtzM130zrnR0Y35cybwGq6FdDDKAZ4Xo": {
+    "IngestMoversLambdaVersionWKlbxNY4kyi9Jvz3F9T7uo3xKznh5VdamZ2Kv33vuvY": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "IngestMoversLambdaFunction"
         },
-        "CodeSha256": "5X/7zgrg83OACxhajnBDmEEbqXsFklldPdY98ra0Lag="
+        "CodeSha256": "hoEt9lSAqIrZ6LD8xhAkQ9jTRr4OyzJa6Ui+C9cdvp0="
       }
     },
     "IngestMoversEventsRuleSchedule1": {
@@ -348,7 +350,7 @@
     "GetMoversLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetMoversLambdaVersionO9BL2CKu7IBT4dEOsfCDRez87PGCai4CGZx4aZ6oLq0"
+        "Ref": "GetMoversLambdaVersionG7PUgGHE6jubGyLcL5EOU72ZNvObVcn81i18gJYKo"
       },
       "Export": {
         "Name": "sls-stock-movers-pipeline-dev-GetMoversLambdaFunctionQualifiedArn"
@@ -357,7 +359,7 @@
     "IngestMoversLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "IngestMoversLambdaVersionfxKXiGy74ftdtzM130zrnR0Y35cybwGq6FdDDKAZ4Xo"
+        "Ref": "IngestMoversLambdaVersionWKlbxNY4kyi9Jvz3F9T7uo3xKznh5VdamZ2Kv33vuvY"
       },
       "Export": {
         "Name": "sls-stock-movers-pipeline-dev-IngestMoversLambdaFunctionQualifiedArn"

@@ -12,7 +12,7 @@ provider:
 
   environment:
     TABLE_NAME: StockMoversTable
-
+    MASSIVE_API_KEY: ${env:MASSIVE_API_KEY}
   iam:
     role:
       statements:

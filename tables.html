@@ -2,353 +2,231 @@
 <html lang="en">
 
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stock Movers Table</title>
 
-<title>Stock Movers Table</title>
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-<link href="css/sb-admin-2.min.css" rel="stylesheet">
-<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <style>
+    .positive {
+      color: #1cc88a;
+      font-weight: 700;
+    }
 
-<style>
+    .negative {
+      color: #e74a3b;
+      font-weight: 700;
+    }
 
-.positive {
-color:#1cc88a;
-font-weight:700;
-}
-
-.negative {
-color:#e74a3b;
-font-weight:700;
-}
-
-.neutral {
-color:#858796;
-font-weight:700;
-}
-
-</style>
-
+    .neutral {
+      color: #858796;
+      font-weight: 700;
+    }
+  </style>
 </head>
 
 <body id="page-top">
-
-<div id="wrapper">
-
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
-
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-
-<div class="sidebar-brand-icon">
-<i class="fas fa-chart-line"></i>
-</div>
-
-<div class="sidebar-brand-text mx-3">
-Stock Movers
-</div>
-
-</a>
-
-<hr class="sidebar-divider my-0">
-
-<li class="nav-item">
-
-<a class="nav-link" href="index.html">
-
-<i class="fas fa-home"></i>
-Dashboard
-
-</a>
-
-</li>
-
-<li class="nav-item active">
-
-<a class="nav-link" href="tables.html">
-
-<i class="fas fa-table"></i>
-Table View
-
-</a>
-
-</li>
-
-<hr class="sidebar-divider">
-
-</ul>
-
-
-<div id="content-wrapper">
-
-<div id="content">
-
-
-<nav class="navbar navbar-light bg-white shadow mb-4">
-
-<h5 class="m-0 font-weight-bold text-primary">
-
-Stock Movers Table
-
-</h5>
-
-<button id="refreshBtn" class="btn btn-primary btn-sm">
-
-Refresh
-
-</button>
-
-</nav>
-
-
-<div class="container-fluid">
-
-
-<div class="card shadow mb-4">
-
-<div class="card-header">
-
-<h6 class="m-0 font-weight-bold text-primary">
-
-Top Movers (Last 7 Days)
-
-</h6>
-
-</div>
-
-
-<div class="card-body">
-
-<div class="table-responsive">
-
-<table class="table table-bordered" id="moversTable">
-
-<thead>
-
-<tr>
-
-<th>Date</th>
-
-<th>Ticker</th>
-
-<th>Percent Change</th>
-
-<th>Close Price</th>
-
-</tr>
-
-</thead>
-
-
-<tbody id="tableBody">
-
-<tr>
-
-<td colspan="4" class="text-center">
-
-Waiting for data...
-
-</td>
-
-</tr>
-
-</tbody>
-
-
-</table>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="card shadow">
-
-<div class="card-body">
-
-<strong>API Endpoint:</strong>
-
-<div id="apiUrl">
-
-https://YOUR-API-ID.execute-api.REGION.amazonaws.com/prod/movers
-
-</div>
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-<script>
-
-const API_URL =
-"https://yx6tfjk7ki.execute-api.us-east-2.amazonaws.com/movers";
-
-const tableBody =
-document.getElementById("tableBody");
-
-const refreshBtn =
-document.getElementById("refreshBtn");
-
-
-function percentColor(value){
-
-const num = Number(value);
-
-if(num>0){
-
-return `<span class="positive">+${num.toFixed(2)}%</span>`;
-
-}
-
-if(num<0){
-
-return `<span class="negative">${num.toFixed(2)}%</span>`;
-
-}
-
-return `<span class="neutral">${num.toFixed(2)}%</span>`;
-
-}
-
-
-
-function priceFormat(value){
-
-const num = Number(value);
-
-if(isNaN(num)){
-
-return "N/A";
-
-}
-
-return "$"+num.toFixed(2);
-
-}
-
-
-
-function render(data){
-
-if(!data.length){
-
-tableBody.innerHTML =
-
-`<tr>
-<td colspan="4" class="text-center">
-No data returned
-</td>
-</tr>`;
-
-return;
-
-}
-
-
-tableBody.innerHTML =
-
-data.map(item =>
-
-`<tr>
-
-<td>${item.date}</td>
-
-<td>
-<strong>${item.ticker}</strong>
-</td>
-
-<td>
-${percentColor(item.percent_change)}
-</td>
-
-<td>
-${priceFormat(item.close_price)}
-</td>
-
-</tr>`
-
-).join("");
-
-$('#moversTable').DataTable();
-
-}
-
-
-
-async function loadData(){
-
-tableBody.innerHTML =
-
-`<tr>
-<td colspan="4" class="text-center">
-Loading...
-</td>
-</tr>`;
-
-
-try{
-
-const response =
-await fetch(API_URL);
-
-const json =
-await response.json();
-
-render(json);
-
-}
-
-catch(err){
-
-tableBody.innerHTML =
-
-`<tr>
-<td colspan="4" class="text-danger text-center">
-Error loading data
-</td>
-</tr>`;
-
-console.log(err);
-
-}
-
-}
-
-
-
-refreshBtn.addEventListener(
-"click",
-loadData
-);
-
-
-loadData();
-
-</script>
-
-
+  <div id="wrapper">
+
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">
+          Stock Movers
+        </div>
+      </a>
+
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="tables.html">
+          <i class="fas fa-table"></i>
+          <span>Table View</span>
+        </a>
+      </li>
+
+      <hr class="sidebar-divider">
+    </ul>
+
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+
+        <nav class="navbar navbar-light bg-white shadow mb-4">
+          <h5 class="m-0 font-weight-bold text-primary">
+            Stock Movers Table
+          </h5>
+
+          <button id="refreshBtn" class="btn btn-primary btn-sm">
+            Refresh
+          </button>
+        </nav>
+
+        <div class="container-fluid">
+
+          <div class="card shadow mb-4">
+            <div class="card-header">
+              <h6 class="m-0 font-weight-bold text-primary">
+                Top Movers (Last 7 Days)
+              </h6>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Ticker</th>
+                      <th>Percent Change</th>
+                      <th>Close Price</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Date</th>
+                      <th>Ticker</th>
+                      <th>Percent Change</th>
+                      <th>Close Price</th>
+                    </tr>
+                  </tfoot>
+                  <tbody id="moversTableBody">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow">
+            <div class="card-body">
+              <strong>API Endpoint:</strong>
+              <div id="apiUrl">
+                https://0o6g6j04p2.execute-api.us-east-2.amazonaws.com/movers
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <script>
+    const API_URL = "https://0o6g6j04p2.execute-api.us-east-2.amazonaws.com/movers";
+
+    const tableBody = document.getElementById("moversTableBody");
+    const refreshBtn = document.getElementById("refreshBtn");
+    let dataTableInstance = null;
+
+    function percentColor(value) {
+      const num = Number(value);
+
+      if (num > 0) {
+        return `<span class="positive">+${num.toFixed(2)}%</span>`;
+      }
+
+      if (num < 0) {
+        return `<span class="negative">${num.toFixed(2)}%</span>`;
+      }
+
+      return `<span class="neutral">${num.toFixed(2)}%</span>`;
+    }
+
+    function priceFormat(value) {
+      const num = Number(value);
+
+      if (isNaN(num)) {
+        return "N/A";
+      }
+
+      return "$" + num.toFixed(2);
+    }
+
+    function render(data) {
+      if (dataTableInstance) {
+        dataTableInstance.destroy();
+        dataTableInstance = null;
+      }
+
+      if (!data.length) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="4" class="text-center">No data returned</td>
+          </tr>
+        `;
+        return;
+      }
+
+      tableBody.innerHTML = data.map(item => `
+        <tr>
+          <td>${item.date}</td>
+          <td><strong>${item.ticker}</strong></td>
+          <td>${percentColor(item.percent_change)}</td>
+          <td>${priceFormat(item.close_price)}</td>
+        </tr>
+      `).join("");
+
+      dataTableInstance = $("#dataTable").DataTable({
+        destroy: true,
+        pageLength: 7,
+        order: [[0, "desc"]]
+      });
+    }
+
+    async function loadData() {
+      if (dataTableInstance) {
+        dataTableInstance.destroy();
+        dataTableInstance = null;
+      }
+
+      tableBody.innerHTML = `
+        <tr>
+          <td colspan="4" class="text-center">Loading...</td>
+        </tr>
+      `;
+
+      try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`);
+        }
+
+        const json = await response.json();
+        render(json);
+      } catch (err) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="4" class="text-danger text-center">Error loading data</td>
+          </tr>
+        `;
+        console.error(err);
+      }
+    }
+
+    refreshBtn.addEventListener("click", loadData);
+
+    loadData();
+  </script>
 </body>
 
 </html>
