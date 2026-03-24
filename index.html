@@ -7,19 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Stock Movers Dashboard">
     <meta name="author" content="Julia">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 
     <title>Stock Movers Dashboard</title>
 
-    <!-- Custom fonts -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900"
-        rel="stylesheet">
-
-    <!-- Custom styles -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         .positive {
@@ -65,7 +60,6 @@
 
     <div id="wrapper">
 
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -79,8 +73,15 @@
 
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-home"></i>
                     <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Table View</span>
                 </a>
             </li>
 
@@ -110,14 +111,10 @@
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
         </ul>
-        <!-- End Sidebar -->
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <div id="content">
 
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
@@ -129,6 +126,12 @@
                     </div>
 
                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item d-flex align-items-center mr-2">
+                            <a href="tables.html" class="btn btn-outline-primary btn-sm shadow-sm">
+                                <i class="fas fa-table fa-sm mr-1"></i>
+                                Open Full Table
+                            </a>
+                        </li>
                         <li class="nav-item d-flex align-items-center mr-3">
                             <button id="refreshBtn" class="btn btn-primary btn-sm shadow-sm">
                                 <i class="fas fa-sync-alt fa-sm text-white-50 mr-1"></i>
@@ -137,11 +140,9 @@
                         </li>
                     </ul>
                 </nav>
-                <!-- End Topbar -->
 
                 <div class="container-fluid">
 
-                    <!-- Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <div>
                             <h1 class="h3 mb-1 text-gray-800">Top Stock Movers</h1>
@@ -151,7 +152,6 @@
                         </div>
                     </div>
 
-                    <!-- Summary Cards -->
                     <div class="row">
 
                         <div class="col-xl-4 col-md-6 mb-4">
@@ -178,7 +178,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                top Mover
+                                                Top Mover
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800" id="bestPerformer">--</div>
                                         </div>
@@ -210,7 +210,6 @@
 
                     </div>
 
-                    <!-- Status Message -->
                     <div class="row">
                         <div class="col-12 mb-3">
                             <div class="card shadow">
@@ -222,7 +221,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Graph -->
+
                     <div class="row mb-4">
                         <div class="col-12">
                             <div class="card shadow">
@@ -236,12 +235,14 @@
                         </div>
                     </div>
 
-                    <!-- Table -->
                     <div class="row" id="moversTableSection">
                         <div class="col-12">
                             <div class="card shadow mb-4 table-card">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Stock Movers Table</h6>
+                                    <a href="tables.html" class="btn btn-sm btn-outline-primary">
+                                        View Full Table Page
+                                    </a>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -268,10 +269,23 @@
                             </div>
                         </div>
                     </div>
-            </div>
-            <!-- End Main Content -->
 
-            <!-- Footer -->
+                    <div class="row" id="apiInfoSection">
+                        <div class="col-12 mb-4">
+                            <div class="card shadow">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">API Endpoint</h6>
+                                </div>
+                                <div class="card-body">
+                                    <code>https://0o6g6j04p2.execute-api.us-east-2.amazonaws.com/movers</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -281,25 +295,21 @@
             </footer>
 
         </div>
-        <!-- End Content Wrapper -->
-
     </div>
-    <!-- End Page Wrapper -->
 
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Scripts -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
-        // Replace this with your real API Gateway endpoint
         const API_URL = "https://0o6g6j04p2.execute-api.us-east-2.amazonaws.com/movers";
         let moversChart = null;
+
         const tableBody = document.getElementById("moversTableBody");
         const statusMessage = document.getElementById("statusMessage");
         const recordCount = document.getElementById("recordCount");
@@ -336,13 +346,9 @@
 
             const formatted = `${num > 0 ? "+" : ""}${num.toFixed(2)}%`;
 
-            if (num > 0) {
-                return `<span class="positive">${formatted}</span>`;
-            } else if (num < 0) {
-                return `<span class="negative">${formatted}</span>`;
-            } else {
-                return `<span class="neutral">${formatted}</span>`;
-            }
+            if (num > 0) return `<span class="positive">${formatted}</span>`;
+            if (num < 0) return `<span class="negative">${formatted}</span>`;
+            return `<span class="neutral">${formatted}</span>`;
         }
 
         function formatPrice(value) {
@@ -351,17 +357,9 @@
         }
 
         function normalizeData(data) {
-            if (Array.isArray(data)) {
-                return data;
-            }
-
-            if (Array.isArray(data.movers)) {
-                return data.movers;
-            }
-
-            if (Array.isArray(data.data)) {
-                return data.data;
-            }
+            if (Array.isArray(data)) return data;
+            if (Array.isArray(data.movers)) return data.movers;
+            if (Array.isArray(data.data)) return data.data;
 
             if (typeof data.body === "string") {
                 try {
@@ -382,18 +380,8 @@
             if (!canvas) return;
 
             const ctx = canvas.getContext("2d");
-
             const labels = rows.map(item => item.date || "N/A");
-            const values = rows.map(item =>
-                Number(
-                    item.percent_change ??
-                    item.percentChange ??
-                    item.change_percent ??
-                    item.changePercent ??
-                    item["Percent Change"] ??
-                    0
-                )
-            );
+            const values = rows.map(item => Number(item.percent_change ?? 0));
 
             if (moversChart) {
                 moversChart.destroy();
@@ -425,6 +413,7 @@
                 }
             });
         }
+
         function renderTable(rows) {
             if (!rows.length) {
                 tableBody.innerHTML = `
@@ -435,32 +424,14 @@
                 return;
             }
 
-            tableBody.innerHTML = rows.map(item => {
-                const date = item.date || item.Date || "N/A";
-                const ticker = item.ticker || item.symbol || item.Ticker || item.Symbol || "N/A";
-                const percentChange =
-                    item.percent_change ??
-                    item.percentChange ??
-                    item.change_percent ??
-                    item.changePercent ??
-                    item["Percent Change"] ??
-                    null;
-                const closePrice =
-                    item.close_price ??
-                    item.closePrice ??
-                    item.close ??
-                    item["Close Price"] ??
-                    null;
-
-                return `
-                    <tr>
-                        <td>${date}</td>
-                        <td><strong>${ticker}</strong></td>
-                        <td>${formatPercentChange(percentChange)}</td>
-                        <td>${formatPrice(closePrice)}</td>
-                    </tr>
-                `;
-            }).join("");
+            tableBody.innerHTML = rows.map(item => `
+                <tr>
+                    <td>${item.date || "N/A"}</td>
+                    <td><strong>${item.ticker || "N/A"}</strong></td>
+                    <td>${formatPercentChange(item.percent_change)}</td>
+                    <td>${formatPrice(item.close_price)}</td>
+                </tr>
+            `).join("");
         }
 
         function updateSummary(rows) {
@@ -468,35 +439,27 @@
 
             if (!rows.length) {
                 bestPerformer.textContent = "--";
+                lastUpdated.textContent = "No data";
                 return;
             }
 
             let best = null;
 
             for (const item of rows) {
-                const change = Number(
-                    item.percent_change ??
-                    item.percentChange ??
-                    item.change_percent ??
-                    item.changePercent ??
-                    item["Percent Change"]
-                );
-
+                const change = Number(item.percent_change);
                 if (!isNaN(change)) {
                     if (best === null || change > best.change) {
                         best = {
-                            ticker: item.ticker || item.symbol || item.Ticker || item.Symbol || "N/A",
+                            ticker: item.ticker || "N/A",
                             change: change
                         };
                     }
                 }
             }
 
-            if (best) {
-                bestPerformer.textContent = `${best.ticker} (${best.change > 0 ? "+" : ""}${best.change.toFixed(2)}%)`;
-            } else {
-                bestPerformer.textContent = "--";
-            }
+            bestPerformer.textContent = best
+                ? `${best.ticker} (${best.change > 0 ? "+" : ""}${best.change.toFixed(2)}%)`
+                : "--";
 
             lastUpdated.textContent = new Date().toLocaleString();
         }
@@ -540,8 +503,6 @@
         }
 
         refreshBtn.addEventListener("click", loadMovers);
-
-        // Load once when page opens
         loadMovers();
     </script>
 
