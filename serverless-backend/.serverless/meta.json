@@ -13,7 +13,7 @@
         "region": "us-east-2",
         "stage": "dev",
         "environment": {
-          "TABLE_NAME": "StockMoversTable",
+          "TABLE_NAME": "StockMoversTableV2",
           "MASSIVE_API_KEY": "<REDACTED>"
         },
         "iam": {
@@ -27,7 +27,7 @@
                   "dynamodb:Scan",
                   "dynamodb:Query"
                 ],
-                "Resource": "arn:aws:dynamodb:us-east-2:*:table/StockMoversTable"
+                "Resource": "arn:aws:dynamodb:us-east-2:*:table/StockMoversTableV2"
               }
             ]
           }
@@ -62,7 +62,7 @@
           "StockMoversTable": {
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
-              "TableName": "StockMoversTable",
+              "TableName": "StockMoversTableV2",
               "BillingMode": "PAY_PER_REQUEST",
               "AttributeDefinitions": [
                 {
@@ -95,7 +95,7 @@
       "region": "us-east-2",
       "stage": "dev",
       "environment": {
-        "TABLE_NAME": "StockMoversTable",
+        "TABLE_NAME": "StockMoversTableV2",
         "MASSIVE_API_KEY": "<REDACTED>"
       },
       "iam": {
@@ -109,7 +109,7 @@
                 "dynamodb:Scan",
                 "dynamodb:Query"
               ],
-              "Resource": "arn:aws:dynamodb:us-east-2:*:table/StockMoversTable"
+              "Resource": "arn:aws:dynamodb:us-east-2:*:table/StockMoversTableV2"
             }
           ]
         }
@@ -128,7 +128,7 @@
       "serviceProvider": null,
       "instanceParameters": null
     },
-    "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\r\norg: julidanii\r\n# \"app\" enables Serverless Framework Dashboard features and sharing them with other Services.\r\napp: stock-movers\r\nservice: stock-movers-pipeline\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x\r\n  region: us-east-2\r\n  stage: dev\r\n\r\n  environment:\r\n    TABLE_NAME: StockMoversTable\r\n    MASSIVE_API_KEY: ${env:MASSIVE_API_KEY}\r\n  iam:\r\n    role:\r\n      statements:\r\n        - Effect: Allow\r\n          Action:\r\n            - dynamodb:PutItem\r\n            - dynamodb:GetItem\r\n            - dynamodb:Scan\r\n            - dynamodb:Query\r\n          Resource:\r\n            - arn:aws:dynamodb:us-east-2:*:table/StockMoversTable\r\n\r\nfunctions:\r\n\r\n  getMovers:\r\n    handler: handler.getMovers\r\n\r\n    events:\r\n      - httpApi:\r\n          path: /movers\r\n          method: get\r\n\r\n  ingestMovers:\r\n    handler: handler.ingestMovers\r\n\r\n    events:\r\n      - schedule: rate(1 day)\r\n\r\nresources:\r\n  Resources:\r\n\r\n    StockMoversTable:\r\n      Type: AWS::DynamoDB::Table\r\n\r\n      Properties:\r\n        TableName: StockMoversTable\r\n\r\n        BillingMode: PAY_PER_REQUEST\r\n\r\n        AttributeDefinitions:\r\n\r\n          - AttributeName: ticker\r\n            AttributeType: S\r\n\r\n          - AttributeName: date\r\n            AttributeType: S\r\n\r\n        KeySchema:\r\n\r\n          - AttributeName: ticker\r\n            KeyType: HASH\r\n\r\n          - AttributeName: date\r\n            KeyType: RANGE",
+    "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\r\norg: julidanii\r\n# \"app\" enables Serverless Framework Dashboard features and sharing them with other Services.\r\napp: stock-movers\r\nservice: stock-movers-pipeline\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x\r\n  region: us-east-2\r\n  stage: dev\r\n\r\n  environment:\r\n    TABLE_NAME: StockMoversTableV2\r\n    MASSIVE_API_KEY: ${env:MASSIVE_API_KEY}\r\n  iam:\r\n    role:\r\n      statements:\r\n        - Effect: Allow\r\n          Action:\r\n            - dynamodb:PutItem\r\n            - dynamodb:GetItem\r\n            - dynamodb:Scan\r\n            - dynamodb:Query\r\n          Resource:\r\n            - arn:aws:dynamodb:us-east-2:*:table/StockMoversTableV2\r\n\r\nfunctions:\r\n\r\n  getMovers:\r\n    handler: handler.getMovers\r\n\r\n    events:\r\n      - httpApi:\r\n          path: /movers\r\n          method: get\r\n\r\n  ingestMovers:\r\n    handler: handler.ingestMovers\r\n\r\n    events:\r\n      - schedule: rate(1 day)\r\n\r\nresources:\r\n  Resources:\r\n\r\n    StockMoversTable:\r\n      Type: AWS::DynamoDB::Table\r\n\r\n      Properties:\r\n        TableName: StockMoversTableV2\r\n\r\n        BillingMode: PAY_PER_REQUEST\r\n\r\n        AttributeDefinitions:\r\n\r\n          - AttributeName: ticker\r\n            AttributeType: S\r\n\r\n          - AttributeName: date\r\n            AttributeType: S\r\n\r\n        KeySchema:\r\n\r\n          - AttributeName: ticker\r\n            KeyType: HASH\r\n\r\n          - AttributeName: date\r\n            KeyType: RANGE",
     "command": [
       "invoke"
     ],
@@ -144,18 +144,18 @@
     "serviceProviderAwsCfStackName": "stock-movers-pipeline-dev",
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-2:357980556834:stack/stock-movers-pipeline-dev/f39d83b0-27bb-11f1-a7b7-06fdb110795f",
     "serviceProviderAwsCfStackCreated": "2026-03-24T19:59:22.621Z",
-    "serviceProviderAwsCfStackUpdated": "2026-03-24T22:19:20.412Z",
+    "serviceProviderAwsCfStackUpdated": "2026-03-24T22:43:49.567Z",
     "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {
         "OutputKey": "GetMoversLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-2:357980556834:function:stock-movers-pipeline-dev-getMovers:12",
+        "OutputValue": "arn:aws:lambda:us-east-2:357980556834:function:stock-movers-pipeline-dev-getMovers:13",
         "Description": "Current Lambda function version",
         "ExportName": "sls-stock-movers-pipeline-dev-GetMoversLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "IngestMoversLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-2:357980556834:function:stock-movers-pipeline-dev-ingestMovers:12",
+        "OutputValue": "arn:aws:lambda:us-east-2:357980556834:function:stock-movers-pipeline-dev-ingestMovers:13",
         "Description": "Current Lambda function version",
         "ExportName": "sls-stock-movers-pipeline-dev-IngestMoversLambdaFunctionQualifiedArn"
       },

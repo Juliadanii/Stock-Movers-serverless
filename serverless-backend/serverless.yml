@@ -11,7 +11,7 @@ provider:
   stage: dev
 
   environment:
-    TABLE_NAME: StockMoversTable
+    TABLE_NAME: StockMoversTableV2
     MASSIVE_API_KEY: ${env:MASSIVE_API_KEY}
   iam:
     role:
@@ -23,7 +23,7 @@ provider:
             - dynamodb:Scan
             - dynamodb:Query
           Resource:
-            - arn:aws:dynamodb:us-east-2:*:table/StockMoversTable
+            - arn:aws:dynamodb:us-east-2:*:table/StockMoversTableV2
 
 functions:
 
@@ -48,7 +48,7 @@ resources:
       Type: AWS::DynamoDB::Table
 
       Properties:
-        TableName: StockMoversTable
+        TableName: StockMoversTableV2
 
         BillingMode: PAY_PER_REQUEST
 

@@ -10,7 +10,7 @@
       "region": "us-east-2",
       "stage": "dev",
       "environment": {
-        "TABLE_NAME": "StockMoversTable",
+        "TABLE_NAME": "StockMoversTableV2",
         "MASSIVE_API_KEY": "zg1FIXPZL89LZRQoyyeu5toRfBLnSm4x"
       },
       "iam": {
@@ -24,7 +24,7 @@
                 "dynamodb:Scan",
                 "dynamodb:Query"
               ],
-              "Resource": "arn:aws:dynamodb:us-east-2:*:table/StockMoversTable"
+              "Resource": "arn:aws:dynamodb:us-east-2:*:table/StockMoversTableV2"
             }
           ]
         }
@@ -132,7 +132,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-2-3c3e432f-8d0b",
-                "S3Key": "serverless/stock-movers-pipeline/dev/1774390757230-2026-03-24T22:19:17.230Z/stock-movers-pipeline.zip"
+                "S3Key": "serverless/stock-movers-pipeline/dev/1774392227098-2026-03-24T22:43:47.098Z/stock-movers-pipeline.zip"
               },
               "Handler": "handler.getMovers",
               "Runtime": "nodejs18.x",
@@ -141,7 +141,7 @@
               "Timeout": 6,
               "Environment": {
                 "Variables": {
-                  "TABLE_NAME": "StockMoversTable",
+                  "TABLE_NAME": "StockMoversTableV2",
                   "MASSIVE_API_KEY": "zg1FIXPZL89LZRQoyyeu5toRfBLnSm4x"
                 }
               },
@@ -161,7 +161,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-2-3c3e432f-8d0b",
-                "S3Key": "serverless/stock-movers-pipeline/dev/1774390757230-2026-03-24T22:19:17.230Z/stock-movers-pipeline.zip"
+                "S3Key": "serverless/stock-movers-pipeline/dev/1774392227098-2026-03-24T22:43:47.098Z/stock-movers-pipeline.zip"
               },
               "Handler": "handler.ingestMovers",
               "Runtime": "nodejs18.x",
@@ -170,7 +170,7 @@
               "Timeout": 6,
               "Environment": {
                 "Variables": {
-                  "TABLE_NAME": "StockMoversTable",
+                  "TABLE_NAME": "StockMoversTableV2",
                   "MASSIVE_API_KEY": "zg1FIXPZL89LZRQoyyeu5toRfBLnSm4x"
                 }
               },
@@ -185,24 +185,24 @@
               "IngestMoversLogGroup"
             ]
           },
-          "GetMoversLambdaVersionG7PUgGHE6jubGyLcL5EOU72ZNvObVcn81i18gJYKo": {
+          "GetMoversLambdaVersionqR4BcbA5xtDsCD1S7VEVuYRfxlJWyQ1IKmtVEucDY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetMoversLambdaFunction"
               },
-              "CodeSha256": "hoEt9lSAqIrZ6LD8xhAkQ9jTRr4OyzJa6Ui+C9cdvp0="
+              "CodeSha256": "oiGrhABR9hkd8/YXagbeYH1kXyFdBnQewIavcDbRp3s="
             }
           },
-          "IngestMoversLambdaVersionWKlbxNY4kyi9Jvz3F9T7uo3xKznh5VdamZ2Kv33vuvY": {
+          "IngestMoversLambdaVersionPpSQSeMG4fAuXWdhoNFgsa0MsPqCw7OAowsrM8Tdo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "IngestMoversLambdaFunction"
               },
-              "CodeSha256": "hoEt9lSAqIrZ6LD8xhAkQ9jTRr4OyzJa6Ui+C9cdvp0="
+              "CodeSha256": "oiGrhABR9hkd8/YXagbeYH1kXyFdBnQewIavcDbRp3s="
             }
           },
           "IngestMoversEventsRuleSchedule1": {
@@ -337,7 +337,7 @@
           "StockMoversTable": {
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
-              "TableName": "StockMoversTable",
+              "TableName": "StockMoversTableV2",
               "BillingMode": "PAY_PER_REQUEST",
               "AttributeDefinitions": [
                 {
@@ -372,7 +372,7 @@
           "GetMoversLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetMoversLambdaVersionG7PUgGHE6jubGyLcL5EOU72ZNvObVcn81i18gJYKo"
+              "Ref": "GetMoversLambdaVersionqR4BcbA5xtDsCD1S7VEVuYRfxlJWyQ1IKmtVEucDY"
             },
             "Export": {
               "Name": "sls-stock-movers-pipeline-dev-GetMoversLambdaFunctionQualifiedArn"
@@ -381,7 +381,7 @@
           "IngestMoversLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "IngestMoversLambdaVersionWKlbxNY4kyi9Jvz3F9T7uo3xKznh5VdamZ2Kv33vuvY"
+              "Ref": "IngestMoversLambdaVersionPpSQSeMG4fAuXWdhoNFgsa0MsPqCw7OAowsrM8Tdo"
             },
             "Export": {
               "Name": "sls-stock-movers-pipeline-dev-IngestMoversLambdaFunctionQualifiedArn"
@@ -445,7 +445,7 @@
         "timeout": 6,
         "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "GetMoversLambdaVersionG7PUgGHE6jubGyLcL5EOU72ZNvObVcn81i18gJYKo"
+        "versionLogicalId": "GetMoversLambdaVersionqR4BcbA5xtDsCD1S7VEVuYRfxlJWyQ1IKmtVEucDY"
       },
       "ingestMovers": {
         "handler": "handler.ingestMovers",
@@ -460,7 +460,7 @@
         "timeout": 6,
         "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "IngestMoversLambdaVersionWKlbxNY4kyi9Jvz3F9T7uo3xKznh5VdamZ2Kv33vuvY"
+        "versionLogicalId": "IngestMoversLambdaVersionPpSQSeMG4fAuXWdhoNFgsa0MsPqCw7OAowsrM8Tdo"
       }
     },
     "resources": {
@@ -468,7 +468,7 @@
         "StockMoversTable": {
           "Type": "AWS::DynamoDB::Table",
           "Properties": {
-            "TableName": "StockMoversTable",
+            "TableName": "StockMoversTableV2",
             "BillingMode": "PAY_PER_REQUEST",
             "AttributeDefinitions": [
               {
@@ -519,7 +519,7 @@
     "artifact": "C:\\Users\\Julia Gebretatiyos\\Downloads\\Stock-Movers\\Stock_Movers\\serverless-backend\\.serverless\\stock-movers-pipeline.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/stock-movers-pipeline/dev/1774390757230-2026-03-24T22:19:17.230Z",
+    "artifactDirectoryName": "serverless/stock-movers-pipeline/dev/1774392227098-2026-03-24T22:43:47.098Z",
     "artifact": "stock-movers-pipeline.zip"
   }
 }
